@@ -44,9 +44,17 @@ group :development, :test do
   gem 'pry'
   gem 'pry-nav'
   gem 'pry-remote'
+
+  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
+    gem lib, git: "https://github.com/rspec/#{lib}.git", branch: 'main'
+  end
 end
 
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+end
+
+group :test do
+  gem 'database_cleaner-active_record'
 end
