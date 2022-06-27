@@ -113,6 +113,9 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    annotate (3.2.0)
+      activerecord (>= 3.2, < 8.0)
+      rake (>= 10.4, < 14.0)
     awesome_print (1.9.2)
     bootsnap (1.12.0)
       msgpack (~> 1.2)
@@ -235,6 +238,7 @@ PLATFORMS
   arm64-darwin-21
 
 DEPENDENCIES
+  annotate
   awesome_print
   bootsnap
   database_cleaner-active_record
