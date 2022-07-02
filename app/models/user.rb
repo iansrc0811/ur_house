@@ -30,7 +30,22 @@ class User < ApplicationRecord
 
   scope :admins, -> { where(admin: true) }
 
-  def is_admin?
+  def admin?
     admin
+  end
+
+  def admin!
+    update!(admin: true)
+  end
+
+  def jwt_payload
+    super.merge("is_admin"=> admin)
+  end
+
+  def self.register(email:, password:)
+    raise "No email or password" if email.blank? || password.blank?
+    raise "User Exist" if User.find_by_email(email)
+
+    create!(email: email, password: password)
   end
 end

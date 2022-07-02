@@ -58,3 +58,24 @@ references:
 2. [devise_jwt](https://github.com/waiting-for-dev/devise-jwt)
 2. [devise_jwt JTIMatcher](https://www.rubydoc.info/gems/devise-jwt/0.2.0/Devise/JWT/RevocationStrategies/JTIMatcher)
 2. [toturial](https://github.com/DakotaLMartinez/rails-devise-jwt-tutorial)
+
+## Grape API
+
+```ruby
+  gem 'grape'
+  gem "grape-entity"
+```
+
+## Devise + Devise JWT in Grape
+
+```ruby
+  gem 'devise'
+  gem 'devise-jwt'
+```
+
+Use [JTIMatcher](https://github.com/waiting-for-dev/devise-jwt/blob/master/lib/devise/jwt/revocation_strategies/jti_matcher.rb) strategy provided by devise-jwt gem:  
+add `jti` column in User, and this column should be unique indexed.
+
+`Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)` will get JWT
+
+`Warden::JWTAuth::UserDecoder.new.call(token, :user, nil)` to decode JWT then get current user
