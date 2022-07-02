@@ -5,6 +5,7 @@ module V1
         namespace :login do
           before do
             @user_auth_service = UserAuthService.new(email: params[:email], password: params[:password])
+            @token =  @user_auth_service.token
           end
 
           # set response headers
@@ -13,7 +14,8 @@ module V1
           end
 
           post do
-            @user_auth_service.login
+            user = @user_auth_service.login
+            present user, with: V1::Entities::User
           end
         end
       end
