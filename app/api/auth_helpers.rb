@@ -1,13 +1,9 @@
 module AuthHelpers
   def current_user
-    decoder = Warden::JWTAuth::UserDecoder.new
-    decoder.call(token, :user, nil)
-  rescue
-    unauthorized_error!
+    @current_user ||= env["api_v1_user"]
   end
 
-  def token
-    auth = headers['Authorization'].to_s
-    auth.split.last
+  def authenticate!
+    raise AuthorizationError if current_user.blank?
   end
 end

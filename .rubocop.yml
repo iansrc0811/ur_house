@@ -1,0 +1,211 @@
+# Additional steps to run rubocop:
+# 1. Install Gems via bundle install.
+# 2. Install Rubocop VS Code extension: ruby-rubocop
+# 3. vi .vscode/settings.json, and add lines:
+#    "ruby.rubocop.executePath": "/home/<YOUR USERNAME>/.rvm/gems/ruby-2.6.5@keybridge/wrappers/",
+#    "editor.formatOnSave": true,
+# 4. Make an indenting mistake in an .rb file and click save: verify indent is auto fixed, and other errors are outlined.
+
+require:
+  - rubocop-rails
+  - rubocop-performance
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.1.2
+  TargetRailsVersion: 7.0.3
+  Exclude:
+    - db/migrate/*
+    - db/schema.rb
+    - lib/tasks/**/*
+    - vendor/**/*
+
+#################### Layout ###############################
+
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - "spec/**/*"
+
+Layout/EmptyLines:
+  Exclude:
+    - "config/environments/development.rb"
+
+Layout/EmptyLinesAroundBlockBody:
+  Exclude:
+    - "db/schema.rb"
+
+Layout/ExtraSpacing:
+  Exclude:
+    - "config/environments/development.rb"
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: aligned
+
+Layout/ClosingParenthesisIndentation:
+  Enabled: true
+
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: symmetrical
+
+Layout/ParameterAlignment:
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
+
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: start_of_line
+
+Layout/ArgumentAlignment:
+  Enabled: true
+
+Layout/FirstArgumentIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+  IndentationWidth: 2
+
+Layout/FirstParameterIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+  IndentationWidth: 2
+
+Layout/HashAlignment:
+  EnforcedHashRocketStyle: key
+  EnforcedColonStyle: key
+  EnforcedLastArgumentHashStyle: always_inspect
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/TrailingWhitespace:
+  AllowInHeredoc: true
+
+#################### Lint ###############################
+
+Lint/SuppressedException:
+  Exclude:
+    - "bin/rails"
+    - "bin/rake"
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - "spec/**/*"
+
+#################### Metrics ###############################
+
+Metrics/ClassLength:
+  Max: 150
+
+Metrics/AbcSize:
+  Max: 25
+
+Metrics/MethodLength:
+  CountComments: false
+  Enabled: false
+  Max: 30
+
+Metrics/BlockLength:
+  Exclude:
+    - "config/routes.rb"
+    - "config/routes/*.rb"
+    - "spec/**/*.rb"
+
+Metrics/ParameterLists:
+  Max: 4
+
+#################### Naming ##############################
+
+Naming/PredicateName:
+  Exclude:
+    - "app/helpers/application_helper.rb"
+  ForbiddenPrefixes:
+    - is_
+    - have_
+
+#################### Style ###############################
+
+# For now our code is not ready, but we should fix it soon
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: nested
+  SupportedStyles:
+    - nested
+    - compact
+  Exclude:
+    - "app/controllers/**/*.rb"
+    - "app/serializers/**/*.rb"
+    - "app/workers/**/*.rb"
+
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+Style/ClassVars:
+  Exclude:
+    - "app/models/concerns/has_address.rb"
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/WordArray:
+  EnforcedStyle: brackets
+
+Style/SafeNavigation:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: ()
+    "%r": "{}"
+    "%w": "()"
+    "%W": "()"
+    "%i": "()"
+    "%I": "()"
+
+Style/NegatedIf:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+Style/HashSyntax:
+  EnforcedStyle: no_mixed_keys
+
+Style/RedundantParentheses:
+  Enabled: false
+
+#################### Performance ###############################
+Performance/RedundantMerge:
+  Enabled: false
+
+#################### RSpec ###############################
+RSpec/SharedExamples:
+  Enabled: false
+
+RSpec/MessageChain:
+  Enabled: false
