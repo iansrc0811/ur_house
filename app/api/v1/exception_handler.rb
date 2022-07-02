@@ -9,7 +9,7 @@ module V1
       end
 
       rescue_from ActiveRecord::RecordNotFound do
-        rack_response({ 'message' => '404 Not found' }.to_json, 404)
+        rack_response({ 'message' => '400 Record Not Found' }.to_json, 400)
       end
 
       rescue_from AuthorizationError do |e|
@@ -21,7 +21,7 @@ module V1
       end
 
       route :any, '*path' do
-        error!('404 Not Found', 404)
+        error!('404 Page Not Found', 404)
       end
     end
   end

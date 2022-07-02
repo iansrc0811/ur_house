@@ -1,8 +1,8 @@
 module V1
   module User
-    class Register < Grape::API
+    class Login < Grape::API
       namespace :user do
-        namespace :register do
+        namespace :login do
           before do
             @user_auth_service = UserAuthService.new(email: params[:email], password: params[:password])
           end
@@ -13,7 +13,7 @@ module V1
           end
 
           post do
-            @user_auth_service.register
+            @user_auth_service.login
           end
         end
       end

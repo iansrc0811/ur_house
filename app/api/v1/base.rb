@@ -4,5 +4,6 @@ module V1
     version 'v1', using: :path
 
     mount V1::User::Register
+    mount V1::User::Login
   end
 end

@@ -19,7 +19,7 @@ RSpec.describe "V1::User::Register", type: :request do
     it 'responses with jwt authorization token' do
       post '/api/v1/user/register', params: { email: email, password: password }
 
-      expect(response.headers['Authorization']).to match /(^[\w-]*\.[\w-]*\.[\w-]*$)/
+      expect(response.headers['Authorization Bearer']).to match /(^[\w-]*\.[\w-]*\.[\w-]*$)/
     end
 
     context 'when email is already registered' do
