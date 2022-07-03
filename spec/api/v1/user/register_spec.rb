@@ -28,7 +28,7 @@ RSpec.describe "V1::User::Register", type: :request do
       it 'responses with error message' do
         post '/api/v1/user/register', params: { email: email, password: password }
         expect(response.status).to eq(401)
-        expect(json_body['message']).to eq('User Already Exists')
+        expect(json_body['error']).to eq('User Already Exists')
       end
     end
 
@@ -36,7 +36,7 @@ RSpec.describe "V1::User::Register", type: :request do
       it 'responses with error message' do
         post '/api/v1/user/register', params: { email: email }
         expect(response.status).to eq(400)
-        expect(json_body['message']).to eq('password is missing')
+        expect(json_body['error']).to eq('password is missing')
       end
     end
   end

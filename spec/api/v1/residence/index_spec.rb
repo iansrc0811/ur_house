@@ -62,7 +62,7 @@ RSpec.describe "V1::Residences::Index", type: :request do
             params[:price_max] = 11000
             get_residences
             expect(response.status).to eq(400)
-            expect(json_body["message"]).to eq("price_min must be less than price_max")
+            expect(json_body["error"]).to eq("price_min must be less than price_max")
           end
         end
 
@@ -71,7 +71,7 @@ RSpec.describe "V1::Residences::Index", type: :request do
             params.delete(:price_max)
             get_residences
             expect(response.status).to eq(400)
-            expect(json_body["message"]).to eq("price_min, price_max must be provided together")
+            expect(json_body["error"]).to eq("price_min, price_max must be provided together")
           end
         end
       end

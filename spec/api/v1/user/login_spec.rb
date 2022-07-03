@@ -21,7 +21,7 @@ RSpec.describe "V1::User::Login", type: :request do
       let(:email) { 'no_exist@test.com' }
       it "return 'Invalid Email'" do
         login
-        expect(json_body["message"]).to eq('Invalid Email')
+        expect(json_body["error"]).to eq('Invalid Email')
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe "V1::User::Login", type: :request do
 
       it "return 'Invalid Email'" do
         login
-        expect(json_body["message"]).to eq('Invalid Password')
+        expect(json_body["error"]).to eq('Invalid Password')
       end
     end
   end
@@ -40,7 +40,7 @@ RSpec.describe "V1::User::Login", type: :request do
     it 'responses with error message' do
       post '/api/v1/user/login', params: { email: email }
       expect(response.status).to eq(400)
-      expect(json_body['message']).to eq('password is missing')
+      expect(json_body['error']).to eq('password is missing')
     end
   end
 end

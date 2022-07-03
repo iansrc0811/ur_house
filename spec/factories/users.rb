@@ -22,6 +22,8 @@
 #
 FactoryBot.define do
   factory :user do
-    
+    factory :admin do
+      admin { true }
+    end
   end
 end

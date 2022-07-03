@@ -7,6 +7,5 @@ RSpec.shared_context "login user", :shared_context => :metadata do
 
   before do
     post '/api/v1/user/login', params: { email: email, password: password }
-    @token = response.header["Authorization"].gsub("Bearer ")
   end
 end
