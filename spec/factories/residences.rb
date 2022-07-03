@@ -27,10 +27,11 @@ FactoryBot.define do
   factory :residence do
     city { nil }
     district { nil }
-    address { "MyString" }
+    address {Faker::Address.street_address }
     room_number { 1 }
-    mrt { "MyString" }
-
+    mrt { Faker::Name.name }
+    title { Faker::Quote.famous_last_words }
+    price { 10001 }
     trait :taipei do
       city { create(:city, :taipei) }
     end

@@ -10,6 +10,8 @@ module V1
       expose :price
       expose :city, using: V1::Entities::City
       expose :district, using: V1::Entities::District
+      expose :room_number
+      expose :mrt
     end
   end
 end

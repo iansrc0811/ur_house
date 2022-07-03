@@ -26,4 +26,32 @@
 class Residence < ApplicationRecord
   belongs_to :city
   belongs_to :district
+
+  scope :pagination, -> (page=1, per_page=25) {
+    order("id desc").page(page).per(per_page)
+  }
+
+  def self.filter_by(city_id:, district_id:, room_number:, price_min:, price_max:, mrt:)
+    if price_min.present? && price_max.present? && price_min > price_max
+      raise ArgumentError, "price_min must be less than price_max"
+    end
+    result = all
+    if city_id.present?
+      result = where("city_id = ?", city_id)
+    end
+    if district_id.present?
+      result = result.where("district_id = ?", district_id)
+    end
+    if room_number.present?
+      result = result.where("room_number = ?", room_number.to_i)
+    end
+    if price_min.present? && price_max.present?
+      result = result.where("price >= ? And price < ?", price_min, price_max)
+    end
+    if mrt.present?
+      result = result.where("mrt = ?", mrt)
+    end
+    result
+  end
+
 end

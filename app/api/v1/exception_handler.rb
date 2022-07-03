@@ -20,6 +20,10 @@ module V1
         rack_response({ 'message' => e.message }.to_json, 400)
       end
 
+      rescue_from ArgumentError do |e|
+        rack_response({ 'message' => e.message }.to_json, 400)
+      end
+
       route :any, '*path' do
         error!('404 Page Not Found', 404)
       end
