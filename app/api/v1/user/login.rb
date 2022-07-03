@@ -5,12 +5,12 @@ module V1
         namespace :login do
           before do
             @user_auth_service = UserAuthService.new(email: params[:email], password: params[:password])
-            @token =  @user_auth_service.token
+            @jwt =  @user_auth_service.jwt
           end
 
           # set response headers
           after do
-            header 'Authorization Bearer', @user_auth_service.token
+            header 'Authorization', "Bearer #{@user_auth_service.jwt}"
           end
 
           post do

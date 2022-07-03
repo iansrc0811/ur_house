@@ -5,14 +5,14 @@ RSpec.describe "V1::User::Login", type: :request do
   let(:email) { 'user1@test.com' }
   let(:password) { 'password' }
   let(:json_body) { JSON.parse(response.body) }
-  let(:token) { Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)[0]}
+  let(:token) { "Bearer #{Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)[0]}"}
 
 
   describe 'login is successful' do
     let!(:user) { create(:user, email: email, password: password) }
     it 'login' do
       login
-      expect(response.header["Authorization Bearer"]).to eq(token)
+      expect(response.header["Authorization"]).to eq(token)
     end
   end
 

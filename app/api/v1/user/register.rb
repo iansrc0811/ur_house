@@ -9,11 +9,12 @@ module V1
 
           # set response headers
           after do
-            header 'Authorization Bearer', @user_auth_service.token
+            header 'Authorization', "Bearer #{@user_auth_service.jwt}"
           end
 
           post do
-            @user_auth_service.register
+            user = @user_auth_service.register
+            present user, with: V1::Entities::User
           end
         end
       end

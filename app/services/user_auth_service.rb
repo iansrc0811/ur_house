@@ -1,5 +1,5 @@
 class UserAuthService
-  attr_reader :email, :password, :token
+  attr_reader :email, :password, :jwt
 
   def initialize(email: nil, password: nil, user_id: nil)
     @email = email
@@ -12,8 +12,8 @@ class UserAuthService
     raise AuthorizationError, "User Already Exists" if User.find_by_email(email)
 
     user = User.create!(email: email, password: password)
-    @token, payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
-    user
+    @jwt, payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
+    user.as_json.merge("jwt"=> @jwt)
   end
 
   def login
@@ -23,8 +23,8 @@ class UserAuthService
 
     raise AuthorizationError, "Invalid Password" if !user.valid_password?(password)
 
-    @token, payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
-    user.as_json.merge("token"=> @token)
+    @jwt, payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
+    user.as_json.merge("jwt"=> @jwt)
   end
 
   def logout

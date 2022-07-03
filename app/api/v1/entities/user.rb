@@ -7,7 +7,7 @@ module V1
 
       expose "id"
       expose "email"
-      expose "amin"
+      expose "admin"
       expose "jwt"
     end
   end

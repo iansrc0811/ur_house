@@ -1,23 +1,16 @@
 require 'rails_helper'
+require 'login_user'
 RSpec.describe "V1::User::Logout", type: :request do
+  include_context "login user"
   subject(:logout) do
-    delete '/api/v1/user/logout', params: { jwt: token }
+    headers = { "Authorization" => token }
+    delete '/api/v1/user/logout', params: {}, headers: headers
   end
 
-  let!(:user) { create(:user, email: email, password: password) }
-  let(:token) { Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)[0]}
-  let(:email) { 'user1@test.com' }
-  let(:password) { 'password' }
-  let(:json_body) { JSON.parse(response.body) }
-
-
   describe 'logout is successful' do
-    before do
-      post '/api/v1/user/login', params: { email: email, password: password }
-      @token = response.header["Authorization Bearer"]
-    end
     it 'logout' do
-      expect { logout }.to change {user.reload.jti}
+      expect { delete '/api/v1/user/logout', params: {}, headers: { "Authorization" => token } }.
+      to change {user.reload.jti}
     end
   end
 

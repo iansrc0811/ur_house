@@ -13,7 +13,9 @@ module V1
       end
 
       def token
-        @token = params[:jwt]
+        return nil if request.headers["Authorization"].blank?
+
+        @token = request.headers["Authorization"].gsub("Bearer ", "")
       end
 
       def params
