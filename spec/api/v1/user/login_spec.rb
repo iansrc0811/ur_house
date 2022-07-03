@@ -35,4 +35,12 @@ RSpec.describe "V1::User::Login", type: :request do
       end
     end
   end
+
+  context "when missing params" do
+    it 'responses with error message' do
+      post '/api/v1/user/login', params: { email: email }
+      expect(response.status).to eq(400)
+      expect(json_body['message']).to eq('password is missing')
+    end
+  end
 end

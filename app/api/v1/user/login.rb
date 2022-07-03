@@ -13,6 +13,13 @@ module V1
             header 'Authorization', "Bearer #{@user_auth_service.jwt}"
           end
 
+          desc "Login user"
+
+          params do
+            requires :email, type: String, desc: 'User email'
+            requires :password, type: String, desc: 'User password'
+          end
+
           post do
             user = @user_auth_service.login
             present user, with: V1::Entities::User

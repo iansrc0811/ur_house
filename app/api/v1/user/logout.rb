@@ -8,6 +8,8 @@ module V1
             @user_auth_service = UserAuthService.new(user_id: current_user.id)
           end
 
+          desc "Logout user"
+
           delete do
             @user_auth_service.logout
           end
