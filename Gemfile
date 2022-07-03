@@ -55,6 +55,7 @@ group :development, :test do
   gem 'devise'
   gem 'devise-jwt'
   gem 'faker'
+  gem 'kaminari'
 end
 
 group :development do
