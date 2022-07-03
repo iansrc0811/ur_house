@@ -9,5 +9,6 @@ module V1
     mount V1::User::Logout
 
     mount V1::Residences::Index
+    mount V1::Residences::Delete
   end
 end

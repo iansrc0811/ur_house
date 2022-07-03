@@ -17,6 +17,7 @@ module V1
         all_or_none_of :price_min, :price_max, message: "must be provided together"
         optional :mrt, type: String, desc: 'MRT Line name'
       end
+
       get "/residences" do
         residences =
           Residence.filter_by(

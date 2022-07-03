@@ -25,8 +25,8 @@
 #
 FactoryBot.define do
   factory :residence do
-    city { nil }
-    district { nil }
+    city
+    district
     address {Faker::Address.street_address }
     room_number { 1 }
     mrt { Faker::Name.name }
