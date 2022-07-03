@@ -10,5 +10,6 @@ module V1
 
     mount V1::Residences::Index
     mount V1::Residences::Delete
+    mount V1::Residences::Edit
   end
 end

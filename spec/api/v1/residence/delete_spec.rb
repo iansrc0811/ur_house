@@ -4,7 +4,7 @@ require 'login_admin'
 RSpec.describe "V1::Residences::Delete", type: :request do
 
   let!(:residence) { create(:residence) }
-  describe 'delete residences' do
+  describe 'Delete residence' do
 
     context "when login user is not admin" do
       include_context "login user"
