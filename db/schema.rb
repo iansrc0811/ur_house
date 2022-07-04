@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_30_164035) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_04_020447) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_30_164035) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_districts_on_city_id"
+  end
+
+  create_table "favorite_lists", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "residence_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["residence_id"], name: "index_favorite_lists_on_residence_id"
+    t.index ["user_id"], name: "index_favorite_lists_on_user_id"
   end
 
   create_table "residences", force: :cascade do |t|
@@ -59,6 +68,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_30_164035) do
   end
 
   add_foreign_key "districts", "cities"
+  add_foreign_key "favorite_lists", "residences"
+  add_foreign_key "favorite_lists", "users"
   add_foreign_key "residences", "cities"
   add_foreign_key "residences", "districts"
 end
