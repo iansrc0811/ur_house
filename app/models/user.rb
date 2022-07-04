@@ -30,6 +30,9 @@ class User < ApplicationRecord
 
   scope :admins, -> { where(admin: true) }
 
+  has_many :favorite_lists, dependent: :destroy
+  has_many :residences, through: :favorite_lists
+
   def admin?
     admin
   end

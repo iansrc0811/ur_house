@@ -11,5 +11,7 @@ module V1
     mount V1::Residences::Index
     mount V1::Residences::Delete
     mount V1::Residences::Edit
+
+    mount V1::FavoriteList::Index
   end
 end
