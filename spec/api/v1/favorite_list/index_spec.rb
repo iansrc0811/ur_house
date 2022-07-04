@@ -19,7 +19,7 @@ RSpec.describe "V1::FavoriteList::Index", type: :request do
     it "list favorite_list without filter conditions" do
       get_favorite_list
       expect(json_body.size).to eq(25) # default is 25 items per_page
-      first_25_items_id = user.favorite_lists.order("id desc").limit(25).map(&:id)
+      first_25_items_id = user.residences.order("id desc").limit(25).map(&:id)
       expect(json_body.map{|item| item["id"]}).to eq(first_25_items_id)
     end
   end

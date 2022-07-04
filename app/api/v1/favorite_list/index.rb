@@ -10,6 +10,7 @@ module V1
 
       get "/favorite_lists" do
         residences = current_user.residences
+          .distinct
           .pagination(params[:page] || 1, params[:per_page] || 25)
         present residences, with: V1::Entities::Residence
       end
