@@ -58,4 +58,11 @@ class User < ApplicationRecord
     new_ids = residence_ids.to_a + ids.map(&:to_i)
     self.residence_ids = new_ids.uniq
   end
+
+  def delete_residence_from_favorite(ids:)
+    return if ids.blank?
+
+    new_ids = residence_ids.to_a - ids.map(&:to_i)
+    self.residence_ids = new_ids.uniq
+  end
 end
