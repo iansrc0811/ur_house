@@ -6,7 +6,9 @@
 #  admin                  :boolean          default(FALSE), not null
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  first_name             :string
 #  jti                    :string
+#  last_name              :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -22,6 +24,8 @@
 #
 FactoryBot.define do
   factory :user do
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name }
     factory :admin do
       admin { true }
     end

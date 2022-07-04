@@ -9,9 +9,9 @@ end
   new_taipei.districts.find_or_create_by!(name: dist)
 end
 
-user = User.find_or_create_by!(email: 'ian@test.com')
+user = User.find_or_create_by!(email: 'ian@test.com', first_name: 'ian', last_name: 'test')
 user.update!(password: '123456')
-admin = User.find_or_create_by!(email: 'admin@test.com', admin: true)
+admin = User.find_or_create_by!(email: 'admin@test.com', admin: true, first_name: 'admin', last_name: 'test')
 admin.update!(password: '123456')
 
 GetResidencesService.new(city: 'taipei', size: 15).perform

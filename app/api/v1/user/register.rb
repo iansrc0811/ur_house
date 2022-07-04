@@ -4,7 +4,7 @@ module V1
       namespace :user do
         namespace :register do
           before do
-            @user_auth_service = UserAuthService.new(email: params[:email], password: params[:password])
+            @user_auth_service = UserAuthService.new(email: params[:email], password: params[:password], first_name: params[:first_name], last_name: params[:last_name])
           end
 
           # set response headers
@@ -15,6 +15,8 @@ module V1
           desc "Create an new user"
 
           params do
+            requires :first_name, type: String, desc: 'User first name'
+            requires :last_name, type: String, desc: 'User last name'
             requires :email, type: String, desc: 'User email'
             requires :password, type: String, desc: 'User password'
           end

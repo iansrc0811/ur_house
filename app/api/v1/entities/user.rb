@@ -7,6 +7,9 @@ module V1
 
       expose "id"
       expose "email"
+      expose "first_name"
+      expose "last_name"
+      expose "full_name"
       expose "admin"
       expose "jwt"
     end

@@ -6,7 +6,9 @@
 #  admin                  :boolean          default(FALSE), not null
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  first_name             :string
 #  jti                    :string
+#  last_name              :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -22,6 +24,8 @@
 #
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
+  # sanitize to prevent from XSS attacks
+  include ActionView::Helpers::SanitizeHelper
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -45,11 +49,9 @@ class User < ApplicationRecord
     super.merge("is_admin"=> admin)
   end
 
-  def self.register(email:, password:)
-    raise "No email or password" if email.blank? || password.blank?
-    raise "User Exist" if User.find_by_email(email)
-
-    create!(email: email, password: password)
+  def full_name
+    # sanitize to prevent from XSS attacks
+    sanitize "#{first_name} #{last_name}"
   end
 
   def add_residence_to_favorite(ids:)

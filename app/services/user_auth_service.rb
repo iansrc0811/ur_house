@@ -1,9 +1,11 @@
 class UserAuthService
-  attr_reader :email, :password, :jwt
+  attr_reader :email, :password, :first_name, :last_name, :jwt
 
-  def initialize(email: nil, password: nil, user_id: nil)
+  def initialize(email: nil, password: nil, first_name: nil, last_name: nil, user_id: nil)
     @email = email
     @password = password
+    @first_name = first_name
+    @last_name = last_name
     @user_id = user_id
   end
 
@@ -11,9 +13,9 @@ class UserAuthService
     check_params
     raise AuthorizationError, "User Already Exists" if User.find_by_email(email)
 
-    user = User.create!(email: email, password: password)
+    user = User.create!(email: email, password: password, first_name: first_name, last_name: last_name)
     @jwt, payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
-    user.as_json.merge("jwt"=> @jwt)
+    user_formater(user)
   end
 
   def login
@@ -24,7 +26,7 @@ class UserAuthService
     raise AuthorizationError, "Invalid Password" if !user.valid_password?(password)
 
     @jwt, payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
-    user.as_json.merge("jwt"=> @jwt)
+    user_formater(user)
   end
 
   def logout
@@ -35,5 +37,11 @@ class UserAuthService
 
   def check_params
     raise ParamMissingError, "No email or password provided" if email.blank? || password.blank?
+  end
+
+  def user_formater(user)
+    user.as_json(
+      except: [:created_at, :updated_at, :jti],
+      methods: :full_name).merge("jwt"=> @jwt)
   end
 end
