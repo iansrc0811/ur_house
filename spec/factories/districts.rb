@@ -18,7 +18,10 @@
 #
 FactoryBot.define do
   factory :district do
-    name { "MyString" }
+    sequence :name do |n|
+      "district_#{n}"
+    end
+
     city
   end
 end

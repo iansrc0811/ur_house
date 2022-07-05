@@ -4,6 +4,7 @@ module V1
       self.hash_access = :to_s
       expose :id
       expose :name
+      expose :city_id
     end
   end
 end

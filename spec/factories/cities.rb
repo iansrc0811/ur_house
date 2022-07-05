@@ -9,7 +9,10 @@
 #
 FactoryBot.define do
   factory :city do
-    name { "city" }
+    sequence :name do |n|
+      "city_#{n}"
+    end
+
     trait :taipei do
       name { "Taipei City" }
     end
