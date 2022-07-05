@@ -4,6 +4,7 @@ module V1
 
       before do
         authenticate!
+        error!('Access Denied', 401) if !current_user.admin?
       end
 
       desc "Edit a residence"
@@ -18,7 +19,6 @@ module V1
       end
 
       patch "/residences" do
-        error!('Access Denied', 401) if !current_user.admin?
         residence = Residence.find(params[:id])
         # set include_missing to false to ignore nil value params
         residence.update! declared(params, include_missing: false)

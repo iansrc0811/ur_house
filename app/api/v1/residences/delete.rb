@@ -4,6 +4,7 @@ module V1
 
       before do
         authenticate!
+        error!('Access Denied', 401) if !current_user.admin?
       end
 
       desc "Delete a residence"
@@ -13,7 +14,6 @@ module V1
       end
 
       delete "/residences" do
-        error!('Access Denied', 401) if !current_user.admin?
         residence = Residence.find(params[:id])
         error!('Residence not found', 404) if residence.blank?
         residence.destroy!
