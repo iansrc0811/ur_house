@@ -88,7 +88,7 @@ class Residence < ApplicationRecord
         items: items,
         page: page,
         per_page: per_page,
-        total: self.count
+        total: items.size
       }
   end
 
