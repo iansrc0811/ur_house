@@ -16,21 +16,21 @@ module V1
         optional :price_max, type: Integer, desc: 'Price range max'
         all_or_none_of :price_min, :price_max, message: "must be provided together"
         optional :mrt, type: String, desc: 'MRT Line name'
+        optional :page, type: Integer, desc: 'Page number for pagnination'
+        optional :per_page, type: Integer, desc: 'Number of items per page'
       end
 
       get "/residences" do
         residence_list =
           Residence.list(
-            residences:
-              Residence.filter_by(
-                city_id: params[:city_id],
-                district_id: params[:district_id],
-                room_number: params[:room_number],
-                price_min: params[:price_min],
-                price_max: params[:price_max],
-                mrt: params[:mrt]),
-            page: params[:page] || 1,
-            per_page: params[:per_page] || 25
+            city_id: params[:city_id],
+            district_id: params[:district_id],
+            room_number: params[:room_number],
+            price_min: params[:price_min],
+            price_max: params[:price_max],
+            mrt: params[:mrt],
+            page: params[:page],
+            per_page: params[:per_page]
           )
         present residence_list, with: V1::Entities::ResidenceWraper
       end

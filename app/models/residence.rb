@@ -54,14 +54,37 @@ class Residence < ApplicationRecord
     result
   end
 
-  def self.list(residences: self.filter_by, page: 1, per_page: 25)
-    {
-      items: residences.pagination(page, per_page),
-      count: self.count,
-      page: page,
-      per_page: per_page,
-      total: self.count
-    }
-  end
+  def self.list(city_id:, district_id:, room_number:, price_min:, price_max:, mrt:, page: ,per_page:)
+    items =
+      includes(:city, :district)
+      .filter_by(
+        city_id: city_id,
+        district_id: district_id,
+        room_number: room_number,
+        price_min: price_min,
+        price_max: price_max,
+        mrt: mrt)
+      .pagination(page, per_page)
+      .as_json(
+        only:[
+          :id,
+          :address,
+          :mrt,
+          :price,
+          :room_number,
+          :title
+        ],
+        include: {
+          city: { only: [:id, :name] },
+          district: { only: [:id, :name] }
+          }
+      )
 
+      {
+        items: items,
+        page: page,
+        per_page: per_page,
+        total: self.count
+      }
+  end
 end
