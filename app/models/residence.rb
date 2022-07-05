@@ -54,4 +54,14 @@ class Residence < ApplicationRecord
     result
   end
 
+  def self.list(residences: self.filter_by, page: 1, per_page: 25)
+    {
+      items: residences.pagination(page, per_page),
+      count: self.count,
+      page: page,
+      per_page: per_page,
+      total: self.count
+    }
+  end
+
 end

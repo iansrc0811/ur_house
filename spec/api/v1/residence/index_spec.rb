@@ -22,9 +22,9 @@ RSpec.describe "V1::Residences::Index", type: :request do
       let(:params) { {} }
       it "list residences without filter conditions" do
         get_residences
-        expect(json_body.size).to eq(25) # default is 25 items per_page
+        expect(json_body["items"].size).to eq(25) # default is 25 items per_page
         first_25_items_id = Residence.order("id desc").limit(25).map(&:id)
-        expect(json_body.map{|item| item["id"]}).to eq(first_25_items_id)
+        expect(json_body["items"].map{|item| item["id"]}).to eq(first_25_items_id)
       end
     end
 
@@ -44,15 +44,15 @@ RSpec.describe "V1::Residences::Index", type: :request do
 
       it 'filters by condition' do
         get_residences
-        expect(json_body.size).to eq(10) # 10 items match conditions
-        expect(json_body.all? {|item| item["mrt"] == 'blue'}).to be_truthy
-        expect(json_body.all? {|item| item["room_number"] == 2}).to be_truthy
+        expect(json_body["items"].size).to eq(10) # 10 items match conditions
+        expect(json_body["items"].all? {|item| item["mrt"] == 'blue'}).to be_truthy
+        expect(json_body["items"].all? {|item| item["room_number"] == 2}).to be_truthy
       end
 
       it "get no items when no match conditions" do
         params[:price_min] = 11000
         get_residences
-        expect(json_body.size).to eq(0)
+        expect(json_body["items"].size).to eq(0)
       end
 
       describe 'with error params' do

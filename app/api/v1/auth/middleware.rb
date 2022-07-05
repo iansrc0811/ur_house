@@ -7,6 +7,7 @@ module V1
           @env["api_v1_user"] ||=  Warden::JWTAuth::UserDecoder.new.call(token, :user, nil)
         end
       rescue Warden::JWTAuth::Errors::RevokedToken => e
+      rescue JWT::DecodeError => e
         raise AuthorizationError, e.message
       end
 

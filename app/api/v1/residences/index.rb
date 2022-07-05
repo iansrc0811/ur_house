@@ -19,16 +19,20 @@ module V1
       end
 
       get "/residences" do
-        residences =
-          Residence.filter_by(
-            city_id: params[:city_id],
-            district_id: params[:district_id],
-            room_number: params[:room_number],
-            price_min: params[:price_min],
-            price_max: params[:price_max],
-            mrt: params[:mrt])
-            .pagination(params[:page] || 1, params[:per_page] || 25)
-        present residences, with: V1::Entities::Residence
+        residence_list =
+          Residence.list(
+            residences:
+              Residence.filter_by(
+                city_id: params[:city_id],
+                district_id: params[:district_id],
+                room_number: params[:room_number],
+                price_min: params[:price_min],
+                price_max: params[:price_max],
+                mrt: params[:mrt]),
+            page: params[:page] || 1,
+            per_page: params[:per_page] || 25
+          )
+        present residence_list, with: V1::Entities::ResidenceWraper
       end
     end
   end
