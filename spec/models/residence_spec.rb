@@ -4,6 +4,7 @@
 #
 #  id          :bigint           not null, primary key
 #  address     :string           not null
+#  image       :string
 #  mrt         :string
 #  price       :integer          not null
 #  room_number :integer          not null

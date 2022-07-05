@@ -4,6 +4,7 @@
 #
 #  id          :bigint           not null, primary key
 #  address     :string           not null
+#  image       :string
 #  mrt         :string
 #  price       :integer          not null
 #  room_number :integer          not null
@@ -26,6 +27,8 @@
 class Residence < ApplicationRecord
   belongs_to :city
   belongs_to :district
+
+  mount_uploader :image, ::ResidenceImageUploader
 
   scope :pagination, -> (page=1, per_page=25) {
     order("id desc").page(page).per(per_page)
@@ -74,6 +77,7 @@ class Residence < ApplicationRecord
           :room_number,
           :title
         ],
+        methods: :image_url,
         include: {
           city: { only: [:id, :name] },
           district: { only: [:id, :name] }
@@ -86,5 +90,9 @@ class Residence < ApplicationRecord
         per_page: per_page,
         total: self.count
       }
+  end
+
+  def image_url
+    image.url
   end
 end

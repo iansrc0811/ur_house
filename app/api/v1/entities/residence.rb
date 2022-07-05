@@ -12,6 +12,8 @@ module V1
       expose :district, using: V1::Entities::District
       expose :room_number
       expose :mrt
+      expose :address
+      expose :image_url
     end
   end
 end

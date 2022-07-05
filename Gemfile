@@ -37,6 +37,15 @@ gem "bootsnap", require: false
 # gem "rack-cors"
 gem "httparty"
 gem 'rack-cors'
+gem 'carrierwave', '~> 2.0'
+gem 'grape'
+gem "grape-entity"
+gem 'grape_on_rails_routes'
+gem 'devise'
+gem 'devise-jwt'
+gem 'faker'
+gem 'kaminari'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
@@ -45,18 +54,11 @@ group :development, :test do
   gem 'pry'
   gem 'pry-nav'
   gem 'pry-remote'
+  gem 'down'
 
   %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
     gem lib, git: "https://github.com/rspec/#{lib}.git", branch: 'main'
   end
-
-  gem 'grape'
-  gem "grape-entity"
-  gem 'grape_on_rails_routes'
-  gem 'devise'
-  gem 'devise-jwt'
-  gem 'faker'
-  gem 'kaminari'
 end
 
 group :development do

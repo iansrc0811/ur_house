@@ -1,4 +1,5 @@
 class GetResidencesService
+  require 'open-uri'
   def initialize(city: 'taipei', size: 10)
     raise ArgumentError, 'city is required' if city.blank?
     raise ArgumentError, 'city should be either "taipei" or "new taipei"' if !['taipei', 'new taipei'].include?(city)
@@ -16,7 +17,7 @@ class GetResidencesService
       residences = UrHouseCrawer.new(city: @city, page: page).perform
       residences.each do |residence|
         begin
-          Residence.find_or_create_by!(
+          item = Residence.find_or_create_by!(
             title: residence["title"],
             address:  residence["search_index"].split(']')[0].gsub('[', ''),
             city_id: City.find_by(name: residence["city"]).id,
@@ -25,10 +26,20 @@ class GetResidencesService
             mrt: residence["mrt_line"],
             room_number: residence["total_room"]
           )
+          tempfile = Down.download(residence["image_url"])
+          begin
+            item.image = tempfile
+            item.save!
+          ensure
+            # delte tempfile
+            tempfile.close
+            tempfile.unlink
+          end
+          puts "create residence successfully ##{count}"
           count += 1
           break if count > @size
         rescue => e
-          pusts "residence create failed: #{e.message}"
+          puts "residence create failed: #{e.message}"
           next
         end
       end
