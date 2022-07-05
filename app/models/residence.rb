@@ -34,7 +34,7 @@ class Residence < ApplicationRecord
     order("id desc").page(page).per(per_page)
   }
 
-  def self.filter_by(city_id:, district_id:, room_number:, price_min:, price_max:, mrt:)
+  def self.filter_by(city_id:, district_ids:, room_number:, price_min:, price_max:, mrt:)
     if price_min.present? && price_max.present? && price_min > price_max
       raise ArgumentError, "price_min must be less than price_max"
     end
@@ -42,8 +42,8 @@ class Residence < ApplicationRecord
     if city_id.present?
       result = where("city_id = ?", city_id)
     end
-    if district_id.present?
-      result = result.where("district_id = ?", district_id)
+    if district_ids.present?
+      result = result.where(district_id: district_ids)
     end
     if room_number.present?
       result = result.where("room_number = ?", room_number.to_i)
@@ -57,12 +57,12 @@ class Residence < ApplicationRecord
     result
   end
 
-  def self.list(city_id:, district_id:, room_number:, price_min:, price_max:, mrt:, page: ,per_page:)
+  def self.list(city_id:, district_ids:, room_number:, price_min:, price_max:, mrt:, page: ,per_page:)
     items =
       includes(:city, :district)
       .filter_by(
         city_id: city_id,
-        district_id: district_id,
+        district_ids: district_ids,
         room_number: room_number,
         price_min: price_min,
         price_max: price_max,

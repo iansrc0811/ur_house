@@ -10,7 +10,7 @@ module V1
 
       params do
         optional :city_id, type: Integer, desc: 'City ID'
-        optional :district_id, type: Integer, desc: 'District ID'
+        optional :district_ids, type: Array, desc: 'District ID'
         optional :room_number, type: Integer, desc: 'Bedroom Number'
         optional :price_min, type: Integer, desc: 'Price range min'
         optional :price_max, type: Integer, desc: 'Price range max'
@@ -24,7 +24,7 @@ module V1
         residence_list =
           Residence.list(
             city_id: params[:city_id],
-            district_id: params[:district_id],
+            district_ids: params[:district_ids],
             room_number: params[:room_number],
             price_min: params[:price_min],
             price_max: params[:price_max],
