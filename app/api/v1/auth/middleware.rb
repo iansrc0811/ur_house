@@ -6,6 +6,8 @@ module V1
           # to get current_user, see app/api/auth_helpers.rb
           @env["api_v1_user"] ||=  Warden::JWTAuth::UserDecoder.new.call(token, :user, nil)
         end
+      rescue Warden::JWTAuth::Errors::RevokedToken => e
+        raise AuthorizationError, e.message
       end
 
       def request

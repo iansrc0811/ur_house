@@ -7,6 +7,7 @@ module V1
     mount V1::User::Register
     mount V1::User::Login
     mount V1::User::Logout
+    mount V1::User::VerifyTokenStatus
 
     mount V1::Residences::Index
     mount V1::Residences::Delete

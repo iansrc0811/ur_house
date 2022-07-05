@@ -6,6 +6,12 @@ RSpec.shared_context "login user", :shared_context => :metadata do
   let(:json_body) { JSON.parse(response.body) }
 
   before do
+    signin
+    # call token explicitly to get current token
+    token
+  end
+
+  def signin
     post '/api/v1/user/login', params: { email: email, password: password }
   end
 end

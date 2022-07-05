@@ -33,15 +33,20 @@ class UserAuthService
     User.revoke_jwt(nil, User.find(@user_id))
   end
 
-  private
-
-  def check_params
-    raise ParamMissingError, "No email or password provided" if email.blank? || password.blank?
+  def verify(user)
+    @jwt, payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
+    user_formater(user)
   end
+
+  private
 
   def user_formater(user)
     user.as_json(
       except: [:created_at, :updated_at, :jti],
       methods: :full_name).merge("jwt"=> @jwt)
+  end
+
+  def check_params
+    raise ParamMissingError, "No email or password provided" if email.blank? || password.blank?
   end
 end
