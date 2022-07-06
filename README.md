@@ -9,9 +9,19 @@
 ## Setup
 
 this will create DBs then runs seed file.
-`rails db:setup`
-seed files will create users, fetching residences datas from [urhouse.com](https://www.urhouse.com.tw/), including the image
 
+```ruby
+rails db:setup
+bundle
+```
+
+seed files will create users and fetching residences datas from [urhouse.com](https://www.urhouse.com.tw/), including the image
+
+normal users:  
+user@test.com, user2@test.com with password: 123456
+
+admin users:  
+admin@test.com, password: `123456
 ## Reset
 
 this will drops all DB and records, then create DB and runs seed file.
@@ -19,4 +29,4 @@ this will drops all DB and records, then create DB and runs seed file.
 
 ## Instructions
 
-See [Instruction.md](instruction.md) to get development details
+See [Instruction.md](Instruction.md) to get development details
