@@ -14,7 +14,7 @@ class UserAuthService
     raise AuthorizationError, "User Already Exists" if User.find_by_email(email)
 
     user = User.create!(email: email, password: password, first_name: first_name, last_name: last_name)
-    @jwt, payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
+    user_encoder(user)
     user_formater(user)
   end
 
@@ -25,7 +25,7 @@ class UserAuthService
 
     raise AuthorizationError, "Invalid Password" if !user.valid_password?(password)
 
-    @jwt, payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
+    user_encoder(user)
     user_formater(user)
   end
 
@@ -34,16 +34,21 @@ class UserAuthService
   end
 
   def verify(user)
-    @jwt, payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
+    user_encoder(user)
     user_formater(user)
   end
 
   private
 
+  def user_encoder(user)
+    @jwt, _payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
+  end
+
   def user_formater(user)
     user.as_json(
       except: [:created_at, :updated_at, :jti],
-      methods: :full_name).merge("jwt"=> @jwt)
+      methods: :full_name
+    ).merge("jwt" => @jwt)
   end
 
   def check_params

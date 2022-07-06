@@ -16,32 +16,30 @@ class GetResidencesService
     while count <= @size
       residences = UrHouseCrawer.new(city: @city, page: page).perform
       residences.each do |residence|
+        item = Residence.find_or_create_by!(
+          title: residence["title"],
+          address: residence["search_index"].split(']')[0].delete('['),
+          city_id: City.find_by(name: residence["city"]).id,
+          district_id: District.find_by(name: residence["dist"]).id,
+          price: residence["rent"],
+          mrt: residence["mrt_line"],
+          room_number: residence["total_room"]
+        )
+        tempfile = Down.download(residence["image_url"])
         begin
-          item = Residence.find_or_create_by!(
-            title: residence["title"],
-            address:  residence["search_index"].split(']')[0].gsub('[', ''),
-            city_id: City.find_by(name: residence["city"]).id,
-            district_id: District.find_by(name: residence["dist"]).id,
-            price: residence["rent"],
-            mrt: residence["mrt_line"],
-            room_number: residence["total_room"]
-          )
-          tempfile = Down.download(residence["image_url"])
-          begin
-            item.image = tempfile
-            item.save!
-          ensure
-            # delte tempfile
-            tempfile.close
-            tempfile.unlink
-          end
-          puts "create residence successfully ##{count}"
-          count += 1
-          break if count > @size
-        rescue => e
-          puts "residence create failed: #{e.message}"
-          next
+          item.image = tempfile
+          item.save!
+        ensure
+          # delte tempfile
+          tempfile.close
+          tempfile.unlink
         end
+        puts "create residence successfully ##{count}"
+        count += 1
+        break if count > @size
+      rescue StandardError => e
+        puts "residence create failed: #{e.message}"
+        next
       end
       page += 1
     end
