@@ -1,4 +1,4 @@
-class UrHouseCrawer
+class UrHouseCrawler
   include HTTParty
   attr_reader :city, :page
 

@@ -4,7 +4,7 @@ Here are some instructions explaining how I developed this project.
 
 ## Crawler
 
-UrHouseCrawer have limited option, it's strict to the condition:  
+UrHouseCrawler have limited option, it's strict to the condition:  
 
 ```text
 city: "taipei" or "new taipei"，
@@ -17,7 +17,7 @@ The params are city and page
 
 ```ruby
 # get datas from https://www.urhouse.com.tw/
-UrHouseCrawer.new(city: 'new taipei', page: 2).perform
+UrHouseCrawler.new(city: 'new taipei', page: 2).perform
 ```
 
 If you want to save those data into DB
@@ -27,9 +27,9 @@ Please use `GetResidencesService`
 GetResidencesService.new(city: 'taipei', size: 15).perform
 ```
 
-This service wrap `UrHouseCrawer` and is used in seed file, to save data and images of residences.
+This service wrap `UrHouseCrawler` and is used in seed file, to save data and images of residences.
 
-Duo to the development time limit, I hardcode the request URL in the codebase and the URL query string is encoded.(see `app/services/ur_house_crawer.rb`)
+Duo to the development time limit, I hardcode the request URL in the codebase and the URL query string is encoded.(see `app/services/ur_house_crawler.rb`)
 
 The requested URL is called after submitting the filter form.  
 I got it from the chrome console directly.

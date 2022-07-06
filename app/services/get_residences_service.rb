@@ -14,7 +14,7 @@ class GetResidencesService
     count = 1
     page = 1
     while count <= @size
-      residences = UrHouseCrawer.new(city: @city, page: page).perform
+      residences = UrHouseCrawler.new(city: @city, page: page).perform
       residences.each do |residence|
         item = Residence.find_or_create_by!(
           title: residence["title"],
