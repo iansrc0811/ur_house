@@ -21,7 +21,7 @@ normal users:
 user@test.com, user2@test.com with password: 123456
 
 admin users:  
-admin@test.com, password: `123456
+admin@test.com, password: 123456
 ## Reset
 
 this will drops all DB and records, then create DB and runs seed file.
